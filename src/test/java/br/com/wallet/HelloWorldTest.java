@@ -9,10 +9,10 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest
 @RunWith(SpringRunner.class)
-public class HelloWordTest {
+public class HelloWorldTest {
 
     @Test
-    public void testHelloWord(){
+    public void testHelloWorld(){
         assertEquals(1,1);
     }
 }
