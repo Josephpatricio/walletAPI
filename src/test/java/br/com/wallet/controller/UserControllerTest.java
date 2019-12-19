@@ -46,8 +46,11 @@ public class UserControllerTest {
         mvc.perform(MockMvcRequestBuilders.post(URL).content(getJsonPayload(ID, NAME, EMAIL, PASSWORD))
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isBadRequest())
-                .andExpect(jsonPath("$.errors[0]").value("Email invalido"));
+                .andExpect(status().isCreated())
+                .andExpect(jsonPath("$.data.id").value(ID))
+                .andExpect(jsonPath("$.data.name").value(NAME))
+                .andExpect(jsonPath("$.data.email").value(EMAIL))
+                .andExpect(jsonPath("$.data.password").doesNotExist());
     }
 
     @Test
@@ -55,11 +58,8 @@ public class UserControllerTest {
         mvc.perform(MockMvcRequestBuilders.post(URL).content(getJsonPayload(ID, NAME, "email", PASSWORD))
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isCreated())
-                .andExpect(jsonPath("$.data.id").value(ID))
-                .andExpect(jsonPath("$.data.name").value(NAME))
-                .andExpect(jsonPath("$.data.email").value(EMAIL))
-                .andExpect(jsonPath("$.data.password").value(PASSWORD));
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.errors[0]").value("Email invalido"));
     }
 
     public User getMockUser() {
